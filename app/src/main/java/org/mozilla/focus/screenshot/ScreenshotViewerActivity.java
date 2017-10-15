@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -251,7 +252,7 @@ public class ScreenshotViewerActivity extends LocaleAwareAppCompatActivity imple
             final ImageSource imageSource;
             mImageUri = Uri.fromFile(new File(mScreenshot.getImageUri()));
             imageSource = ImageSource.uri(mImageUri);
-            mImgScreenshot.setImage(imageSource, ImageViewState.ALIGN_TOP);
+            mImgScreenshot.setImage(imageSource, new ImageViewState(0, new PointF(0,0), SubsamplingScaleImageView.ORIENTATION_0));
 
             if(withShare) {
                 onShareClick();

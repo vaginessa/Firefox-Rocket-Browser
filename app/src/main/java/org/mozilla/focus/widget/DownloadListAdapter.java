@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Created by anlin on 01/08/2017.
  */
@@ -369,7 +367,6 @@ public class DownloadListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class DownloadViewHolder extends RecyclerView.ViewHolder{
 
-        @SuppressFBWarnings("URF_UNREAD_FIELD")
         ImageView icon;
         TextView title;
         TextView subtitle;
@@ -387,7 +384,6 @@ public class DownloadListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class DownloadEmptyViewHolder extends RecyclerView.ViewHolder{
 
-        @SuppressFBWarnings("URF_UNREAD_FIELD")
         ImageView imag;
 
         public DownloadEmptyViewHolder(View itemView) {
