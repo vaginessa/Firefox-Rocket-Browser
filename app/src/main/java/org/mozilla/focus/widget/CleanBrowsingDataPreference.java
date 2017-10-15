@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mozilla.focus.R;
 import org.mozilla.focus.history.BrowsingHistoryManager;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.FileUtils;
 import org.mozilla.focus.utils.TopSitesUtils;
 
@@ -66,7 +65,6 @@ public class CleanBrowsingDataPreference extends MultiSelectListPreference {
             if (getValues().size() > 0) {
                 Toast.makeText(getContext(), R.string.message_cleared_browsing_data, Toast.LENGTH_SHORT).show();
             }
-            TelemetryWrapper.settingsEvent(getKey(), flattenToJsonObject(getValues()).toString());
         }
     }
 

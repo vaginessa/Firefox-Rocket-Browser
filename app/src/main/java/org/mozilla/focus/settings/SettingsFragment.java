@@ -21,7 +21,6 @@ import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.locale.LocaleManager;
 import org.mozilla.focus.locale.Locales;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.DialogUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.widget.DefaultBrowserPreference;
@@ -42,8 +41,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         Resources resources = getResources();
         String keyClicked = preference.getKey();
-
-        TelemetryWrapper.settingsClickEvent(keyClicked);
 
         if (keyClicked.equals(resources.getString(R.string.pref_key_give_feedback))) {
             DialogUtils.showRateAppDialog(getActivity());
@@ -100,7 +97,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 locale = Locales.parseLocaleCode(value);
                 localeManager.setSelectedLocale(getActivity(), value);
             }
-            TelemetryWrapper.settingsLocaleChangeEvent(key, String.valueOf(locale), TextUtils.isEmpty(value));
             localeManager.updateConfiguration(getActivity(), locale);
 
             // Manually notify SettingsActivity of locale changes (in most other cases activities
@@ -116,8 +112,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     .commit();
             return;
         }
-
-        TelemetryWrapper.settingsEvent(key, String.valueOf(sharedPreferences.getAll().get(key)));
 
         if (key.equals(getString(R.string.pref_key_storage_clear_browsing_data))) {
             //Clear browsing data Callback function is not here

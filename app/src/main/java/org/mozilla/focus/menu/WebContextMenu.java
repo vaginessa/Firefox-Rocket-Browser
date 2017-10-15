@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
@@ -41,8 +40,6 @@ public class WebContextMenu {
             // We don't support any other classes yet:
             throw new IllegalStateException("WebContextMenu can only handle long-press on images and/or links.");
         }
-
-        TelemetryWrapper.openWebContextMenuEvent();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -64,7 +61,6 @@ public class WebContextMenu {
             public void onCancel(DialogInterface dialog) {
                 // This even is only sent when the back button is pressed, or when a user
                 // taps outside of the dialog:
-                TelemetryWrapper.cancelWebContextMenuEvent();
             }
         });
 
@@ -102,7 +98,6 @@ public class WebContextMenu {
 
                 switch (item.getItemId()) {
                     case R.id.menu_link_share: {
-                        TelemetryWrapper.shareLinkEvent();
                         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, hitTarget.linkURL);
@@ -110,7 +105,6 @@ public class WebContextMenu {
                         return true;
                     }
                     case R.id.menu_image_share: {
-                        TelemetryWrapper.shareImageEvent();
                         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, hitTarget.imageURL);
@@ -120,7 +114,6 @@ public class WebContextMenu {
                     case R.id.menu_image_save: {
                         final Download download = new Download(hitTarget.imageURL, null, null, null, -1, true);
                         callback.onDownloadStart(download);
-                        TelemetryWrapper.saveImageEvent();
                         return true;
                     }
                     case R.id.menu_link_copy:
@@ -130,10 +123,8 @@ public class WebContextMenu {
                         final Uri uri;
 
                         if (item.getItemId() == R.id.menu_link_copy) {
-                            TelemetryWrapper.copyLinkEvent();
                             uri = Uri.parse(hitTarget.linkURL);
                         } else if (item.getItemId() == R.id.menu_image_copy) {
-                            TelemetryWrapper.copyImageEvent();
                             uri = Uri.parse(hitTarget.imageURL);
                         } else {
                             throw new IllegalStateException("Unknown hitTarget type - cannot copy to clipboard");

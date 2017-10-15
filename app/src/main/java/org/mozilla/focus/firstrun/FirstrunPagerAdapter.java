@@ -24,7 +24,6 @@ import com.airbnb.lottie.LottieDrawable;
 import com.airbnb.lottie.OnCompositionLoadedListener;
 
 import org.mozilla.focus.R;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Settings;
 
 public class FirstrunPagerAdapter extends PagerAdapter {
@@ -147,7 +146,6 @@ public class FirstrunPagerAdapter extends PagerAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTurboMode(isChecked);
-                TelemetryWrapper.toggleFirstRunPageEvent(isChecked);
             }
         });
     }

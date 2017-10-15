@@ -46,7 +46,6 @@ import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.screenshot.ScreenshotCaptureTask;
 import org.mozilla.focus.screenshot.ScreenshotGridFragment;
 import org.mozilla.focus.screenshot.ScreenshotViewerActivity;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.urlinput.UrlInputFragment;
 import org.mozilla.focus.utils.Constants;
 import org.mozilla.focus.utils.DialogUtils;
@@ -181,7 +180,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
     protected void onResume() {
         super.onResume();
 
-        TelemetryWrapper.startSession();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
 
@@ -211,7 +209,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
         LocalBroadcastManager.getInstance(this).unregisterReceiver(uiMessageReceiver);
 
         safeForFragmentTransactions = false;
-        TelemetryWrapper.stopSession();
 
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
@@ -220,8 +217,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
     @Override
     protected void onStop() {
         super.onStop();
-
-        TelemetryWrapper.stopMainActivity();
     }
 
     @Override
@@ -344,7 +339,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
                 stringResource = blockingImages ? R.string.message_enable_block_image : R.string.message_disable_block_image;
                 Toast.makeText(this, stringResource, Toast.LENGTH_SHORT).show();
 
-                TelemetryWrapper.menuBlockImageChangeTo(blockingImages);
                 break;
             case R.id.menu_turbomode:
                 //  Toggle
@@ -355,27 +349,21 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
                 stringResource = turboEnabled ? R.string.message_enable_turbo_mode : R.string.message_disable_turbo_mode;
                 Toast.makeText(this, stringResource, Toast.LENGTH_SHORT).show();
 
-                TelemetryWrapper.menuTurboChangeTo(turboEnabled);
                 break;
             case R.id.menu_delete:
                 onDeleteClicked();
-                TelemetryWrapper.clickMenuClearCache();
                 break;
             case R.id.menu_download:
                 onDownloadClicked();
-                TelemetryWrapper.clickMenuDownload();
                 break;
             case R.id.menu_history:
                 onHistoryClicked();
-                TelemetryWrapper.clickMenuHistory();
                 break;
             case R.id.menu_screenshots:
                 onScreenshotsClicked();
-                TelemetryWrapper.clickMenuCapture();
                 break;
             case R.id.menu_preferences:
                 onPreferenceClicked();
-                TelemetryWrapper.clickMenuSettings();
                 break;
             case R.id.action_next:
             case R.id.action_loading:
@@ -422,7 +410,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
         switch (v.getId()) {
             case R.id.action_next:
                 onNextClicked(browserFragment);
-                TelemetryWrapper.clickToolbarForward();
                 break;
             case R.id.action_loading:
                 if ((boolean) v.getTag()) {
@@ -430,15 +417,12 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
                 } else {
                     onRefreshClicked(browserFragment);
                 }
-                TelemetryWrapper.clickToolbarReload();
                 break;
             case R.id.action_share:
                 onShraeClicked(browserFragment);
-                TelemetryWrapper.clickToolbarShare();
                 break;
             case R.id.capture_page:
                 onCapturePageClicked(browserFragment);
-                TelemetryWrapper.clickToolbarCapture();
                 break;
             default:
                 throw new RuntimeException("Unknown id in menu, onMenuBrowsingItemClicked() is" +
@@ -756,9 +740,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity implements Fragme
     public void sendBrowsingTelemetry() {
         final SafeIntent intent = new SafeIntent(getIntent());
         if (intent.getBooleanExtra(EXTRA_TEXT_SELECTION, false)) {
-            TelemetryWrapper.textSelectionIntentEvent();
         } else {
-            TelemetryWrapper.browseIntentEvent();
         }
     }
 

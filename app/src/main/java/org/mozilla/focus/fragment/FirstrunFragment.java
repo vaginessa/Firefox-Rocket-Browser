@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 
 public class FirstrunFragment extends Fragment implements View.OnClickListener {
     public static final String FRAGMENT_TAG = "firstrun";
@@ -139,7 +138,6 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
             case R.id.finish:
                 finishFirstrun();
                 if(isTelemetryValid) {
-                    TelemetryWrapper.finishFirstRunEvent(System.currentTimeMillis() - telemetryStartTimestamp);
                 }
                 break;
 

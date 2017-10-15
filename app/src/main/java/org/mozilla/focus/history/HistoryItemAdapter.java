@@ -23,7 +23,6 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.history.model.DateSection;
 import org.mozilla.focus.history.model.Site;
 import org.mozilla.focus.provider.QueryHandler;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.widget.FragmentListener;
 
 import java.util.ArrayList;
@@ -106,7 +105,6 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if(menuItem.getItemId() == R.id.browsing_history_menu_delete) {
                             BrowsingHistoryManager.getInstance().delete(item.getId(), HistoryItemAdapter.this);
-                            TelemetryWrapper.historyRemoveLink();
                         }
                         return false;
                     }
@@ -117,7 +115,6 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     @Override
                     public void onClick(View v) {
                         popupMenu.show();
-                        TelemetryWrapper.showHistoryContextMenu();
                     }
                 });
 
@@ -154,7 +151,6 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (item instanceof Site && mContext instanceof FragmentListener) {
                 ((FragmentListener) mContext).onNotified(null, FragmentListener.TYPE.OPEN_URL, ((Site) item).getUrl());
                 mHistoryListener.onItemClicked();
-                TelemetryWrapper.historyOpenLink();
             }
         }
     }

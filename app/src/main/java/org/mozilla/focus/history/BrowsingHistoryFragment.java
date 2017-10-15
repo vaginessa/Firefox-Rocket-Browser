@@ -21,7 +21,6 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.fragment.PanelFragment;
 import org.mozilla.focus.home.HomeFragment;
 import org.mozilla.focus.utils.TopSitesUtils;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 
 
 public class BrowsingHistoryFragment extends PanelFragment implements View.OnClickListener, HistoryItemAdapter.HistoryListener {
@@ -78,7 +77,6 @@ public class BrowsingHistoryFragment extends PanelFragment implements View.OnCli
                         if (fragment != null && fragment instanceof HomeFragment) {
                             fragment.onActivityResult(HomeFragment.REFRESH_REQUEST_CODE, Activity.RESULT_OK, null);
                         }
-                        TelemetryWrapper.clearHistory();
                     }
                 });
                 builder.setNegativeButton(R.string.action_cancel, null);

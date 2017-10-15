@@ -25,7 +25,6 @@ import android.widget.Toast;
 import org.mozilla.focus.R;
 import org.mozilla.focus.download.DownloadInfo;
 import org.mozilla.focus.download.DownloadInfoManager;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.IntentUtils;
 
 import java.io.File;
@@ -243,12 +242,10 @@ public class DownloadListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             switch (menuItem.getItemId()){
                                 case R.id.remove:
                                     removeItem(rowid);
-                                    TelemetryWrapper.downloadRemoveFile();
                                     popupMenu.dismiss();
                                     return true;
                                 case R.id.delete:
                                     delete(view, rowid);
-                                    TelemetryWrapper.downloadDeleteFile();
                                     popupMenu.dismiss();
                                     return true;
                                 case R.id.cancel:
@@ -276,7 +273,6 @@ public class DownloadListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
 
                     popupMenu.show();
-                    TelemetryWrapper.showFileContextMenu();
                 }
             });
 
@@ -285,8 +281,6 @@ public class DownloadListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
                     DownloadInfo download = (DownloadInfo) view.getTag();
-
-                    TelemetryWrapper.downloadOpenFile(false);
 
                     if (new File(URI.create(download.getFileUri()).getPath()).exists())
                     {

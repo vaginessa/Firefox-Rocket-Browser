@@ -19,7 +19,6 @@ import org.mozilla.focus.locale.LocaleAwareFragment;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.IWebView;
-import org.mozilla.focus.webkit.WebkitView;
 
 /**
  * Base implementation for fragments that use an IWebView instance. Based on Android's WebViewFragment.

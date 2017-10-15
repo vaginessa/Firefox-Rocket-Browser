@@ -20,7 +20,6 @@ import android.widget.TextView;
 import org.mozilla.focus.R;
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter;
 import org.mozilla.focus.search.SearchEngineManager;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.widget.FlowLayout;
@@ -143,13 +142,10 @@ public class UrlInputFragment extends Fragment implements UrlInputContract.View,
         switch (view.getId()) {
             case R.id.suggestion_item:
                 setUrlText(((TextView) view).getText());
-                TelemetryWrapper.searchSuggestionLongClick();
                 return true;
             case R.id.clear:
-                TelemetryWrapper.searchClear();
                 return false;
             case R.id.dismiss:
-                TelemetryWrapper.searchDismiss();
                 return false;
             default:
                 return false;
@@ -212,8 +208,6 @@ public class UrlInputFragment extends Fragment implements UrlInputContract.View,
                     : UrlUtils.createSearchUrl(getContext(), input);
 
             openUrl(url);
-
-            TelemetryWrapper.urlBarEvent(isUrl, isSuggestion);
         }
     }
 

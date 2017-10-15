@@ -13,8 +13,6 @@ import org.mozilla.focus.history.BrowsingHistoryManager;
 import org.mozilla.focus.locale.LocaleAwareApplication;
 import org.mozilla.focus.screenshot.ScreenshotManager;
 import org.mozilla.focus.search.SearchEngineManager;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.AdjustHelper;
 import org.mozilla.focus.utils.AppConstants;
 
 public class FocusApplication extends LocaleAwareApplication {
@@ -28,9 +26,6 @@ public class FocusApplication extends LocaleAwareApplication {
         enableStrictMode();
 
         SearchEngineManager.getInstance().init(this);
-
-        TelemetryWrapper.init(this);
-        AdjustHelper.setupAdjustIfNeeded(this);
 
         BrowsingHistoryManager.getInstance().init(this);
         ScreenshotManager.getInstance().init(this);

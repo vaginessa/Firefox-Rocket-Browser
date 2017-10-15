@@ -52,7 +52,6 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.download.DownloadInfo;
 import org.mozilla.focus.download.DownloadInfoManager;
 import org.mozilla.focus.menu.WebContextMenu;
-import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.ColorUtils;
 import org.mozilla.focus.utils.Constants;
 import org.mozilla.focus.utils.DrawableUtils;
@@ -493,7 +492,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public boolean onShowFileChooser(WebView webView,
                                              ValueCallback<Uri[]> filePathCallback,
                                              WebChromeClient.FileChooserParams fileChooserParams) {
-                TelemetryWrapper.browseFilePermissionEvent();
                 try {
                     BrowserFragment.this.fileChooseAction = new FileChooseAction(filePathCallback, fileChooserParams);
                     BrowserFragment.this.fileChooseAction.performAction();
@@ -764,19 +762,15 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.display_url:
                 notifyParent(FragmentListener.TYPE.SHOW_URL_INPUT, getUrl());
-                TelemetryWrapper.clickUrlbar();
                 break;
             case R.id.btn_search:
                 notifyParent(FragmentListener.TYPE.SHOW_URL_INPUT, getUrl());
-                TelemetryWrapper.clickToolbarSearch();
                 break;
             case R.id.btn_home:
                 notifyParent(FragmentListener.TYPE.SHOW_HOME, null);
-                TelemetryWrapper.clickToolbarHome();
                 break;
             case R.id.btn_menu:
                 notifyParent(FragmentListener.TYPE.SHOW_MENU, null);
-                TelemetryWrapper.showMenuToolbar();
                 break;
             case R.id.customtab_close:
                 BrowsingSession.getInstance().clearCustomTabConfig();
